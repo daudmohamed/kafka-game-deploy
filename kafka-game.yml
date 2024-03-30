@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-game
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: kafka-game
+  template:
+    metadata:
+      labels:
+        app: kafka-game
+    spec:
+      containers:
+        - image: postgres:16
+          name: postgres
+          env:
+            - name: POSTGRES_USER
+              value: kafka
+            - name: POSTGRES_PASSWORD
+              value: kafka
+            - name: POSTGRES_DB
+              value: kafka
+          ports:
+            - containerPort: 5432
+        - image: registry.daud.dev/daudmohamed/kafka-game-ui:latest
+          name: kafka-game-ui
+          ports:
+            - containerPort: 3000
+        - image: registry.daud.dev/daudmohamed/kafka-game:latest
+          name: kafka-game
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-game-ui
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: kafka-game
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsplay-daud-dev-tls
+spec:
+  secretName: letsplay-daud-dev-tls
+  dnsNames:
+    - letsplay.daud.dev
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kafka-game-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`letsplay.daud.dev`)
+      priority: 10
+      services:
+        - name: kafka-game-ui
+          port: 80
+  tls:
+    secretName: letsplay-daud-dev-tls
