@@ -373,7 +373,7 @@ spec:
   entryPoints:
     - kafka-0
   routes:
-    - match: HostSNI(`kafka.daud.dev`)
+    - match: HostSNI(`*`)
       priority: 10
       services:
         - name: kafka-0
@@ -389,7 +389,7 @@ spec:
   entryPoints:
     - kafka-1
   routes:
-    - match: HostSNI(`kafka.daud.dev`)
+    - match: HostSNI(`*`)
       priority: 10
       services:
         - name: kafka-1
@@ -405,7 +405,7 @@ spec:
   entryPoints:
     - kafka-2
   routes:
-    - match: HostSNI(`kafka.daud.dev`)
+    - match: HostSNI(`*`)
       priority: 10
       services:
         - name: kafka-2
