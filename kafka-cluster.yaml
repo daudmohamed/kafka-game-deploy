@@ -290,7 +290,7 @@ spec:
         - name: DYNAMIC_CONFIG_ENABLED
           value: "1"
         - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-          value: http://kafka-0:9092
+          value: kafka.daud.dev
         - name: KAFKA_CLUSTERS_0_NAME
           value: kafka-cluster
       image: provectuslabs/kafka-ui:latest
