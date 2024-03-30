@@ -31,7 +31,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://localhost:29092
+              value: BROKER://:9092,EXTERNAL://localhost:19092
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -39,7 +39,7 @@ spec:
             - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
               value: BROKER
             - name: KAFKA_CFG_LISTENERS
-              value: BROKER://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+              value: BROKER://:9092,CONTROLLER://:9093,EXTERNAL://:19092
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
             - name: KAFKA_CFG_NODE_ID
@@ -59,8 +59,7 @@ spec:
           ports:
             - containerPort: 9092
               protocol: TCP
-            - containerPort: 29092
-              hostPort: 29092
+            - containerPort: 19092
               protocol: TCP
           volumeMounts:
             - mountPath: /bitnami/kafka
@@ -85,9 +84,9 @@ spec:
     - name: "9093"
       port: 9093
       targetPort: 9093
-    - name: "29092"
-      port: 29092
-      targetPort: 29092
+    - name: "19092"
+      port: 19092
+      targetPort: 19092
   selector:
     io.kompose.service: kafka-0
 ---
@@ -124,7 +123,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://localhost:29093
+              value: BROKER://:9092,EXTERNAL://localhost:19093
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -132,7 +131,7 @@ spec:
             - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
               value: BROKER
             - name: KAFKA_CFG_LISTENERS
-              value: BROKER://:9092,CONTROLLER://:9093,EXTERNAL://:29093
+              value: BROKER://:9092,CONTROLLER://:9093,EXTERNAL://:19093
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
             - name: KAFKA_CFG_NODE_ID
@@ -152,8 +151,7 @@ spec:
           ports:
             - containerPort: 9092
               protocol: TCP
-            - containerPort: 29093
-              hostPort: 29093
+            - containerPort: 19093
               protocol: TCP
           volumeMounts:
             - mountPath: /bitnami/kafka
@@ -178,9 +176,9 @@ spec:
     - name: "9093"
       port: 9093
       targetPort: 9093
-    - name: "29093"
-      port: 29093
-      targetPort: 29093
+    - name: "19093"
+      port: 19093
+      targetPort: 19093
   selector:
     io.kompose.service: kafka-1
 ---
@@ -217,7 +215,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://localhost:29094
+              value: BROKER://:9092,EXTERNAL://localhost:19094
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -225,7 +223,7 @@ spec:
             - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
               value: BROKER
             - name: KAFKA_CFG_LISTENERS
-              value: BROKER://:9092,CONTROLLER://:9093,EXTERNAL://:29094
+              value: BROKER://:9092,CONTROLLER://:9093,EXTERNAL://:19094
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
             - name: KAFKA_CFG_NODE_ID
@@ -245,8 +243,7 @@ spec:
           ports:
             - containerPort: 9092
               protocol: TCP
-            - containerPort: 29094
-              hostPort: 29094
+            - containerPort: 19094
               protocol: TCP
           volumeMounts:
             - mountPath: /bitnami/kafka
@@ -271,9 +268,9 @@ spec:
     - name: "9093"
       port: 9093
       targetPort: 9093
-    - name: "29094"
-      port: 29094
-      targetPort: 29094
+    - name: "19094"
+      port: 19094
+      targetPort: 19094
   selector:
     io.kompose.service: kafka-2
 ---
@@ -300,7 +297,7 @@ spec:
             - name: DYNAMIC_CONFIG_ENABLED
               value: "1"
             - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-              value: kafka.daud.dev:29092
+              value: kafka.daud.dev:19092
             - name: KAFKA_CLUSTERS_0_NAME
               value: kafka-cluster
           image: provectuslabs/kafka-ui:latest
@@ -380,7 +377,7 @@ spec:
       priority: 10
       services:
         - name: kafka-0
-          port: 29092
+          port: 19092
   #tls:
    # secretName: kafka-daud-dev-tls
 ---
@@ -396,7 +393,7 @@ spec:
       priority: 10
       services:
         - name: kafka-1
-          port: 29093
+          port: 19093
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
@@ -410,4 +407,4 @@ spec:
       priority: 10
       services:
         - name: kafka-2
-          port: 29094
+          port: 19094
