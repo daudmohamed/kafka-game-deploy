@@ -82,6 +82,9 @@ spec:
     - name: "9092"
       port: 9092
       targetPort: 9092
+    - name: "9093"
+      port: 9093
+      targetPort: 9093
     - name: "19092"
       port: 19092
       targetPort: 19092
@@ -172,6 +175,9 @@ spec:
     - name: "9092"
       port: 9092
       targetPort: 9092
+    - name: "9093"
+      port: 9093
+      targetPort: 9093
     - name: "19093"
       port: 19093
       targetPort: 19093
@@ -262,6 +268,9 @@ spec:
     - name: "9092"
       port: 9092
       targetPort: 9092
+    - name: "9093"
+      port: 9093
+      targetPort: 9093
     - name: "19094"
       port: 19094
       targetPort: 19094
