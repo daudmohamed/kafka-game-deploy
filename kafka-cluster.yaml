@@ -31,7 +31,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://localhost:19092
+              value: BROKER://:9092,EXTERNAL://kafka-0:19092
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -124,7 +124,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://localhost:19093
+              value: BROKER://:9092,EXTERNAL://kafka-1:19093
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -217,7 +217,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://localhost:19094
+              value: BROKER://:9092,EXTERNAL://kakfa-2:19094
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -371,10 +371,10 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
 metadata:
-  name: kafka-ingress
+  name: kafka-0-ingress
 spec:
   entryPoints:
-    - web
+    - kafka-0
   routes:
     - match: HostSNI(`kafka.daud.dev`)
       priority: 10
@@ -383,3 +383,31 @@ spec:
           port: 19092
   #tls:
    # secretName: kafka-daud-dev-tls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: kafka-1-ingress
+spec:
+  entryPoints:
+    - kafka-1
+  routes:
+    - match: HostSNI(`kafka.daud.dev`)
+      priority: 10
+      services:
+        - name: kafka-1
+          port: 19093
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: kafka-2-ingress
+spec:
+  entryPoints:
+    - kafka-2
+  routes:
+    - match: HostSNI(`kafka.daud.dev`)
+      priority: 10
+      services:
+        - name: kafka-2
+          port: 19094
