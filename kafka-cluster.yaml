@@ -300,7 +300,7 @@ spec:
             - name: DYNAMIC_CONFIG_ENABLED
               value: "1"
             - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-              value: kafka.daud.dev:443
+              value: kafka.daud.dev:80
             - name: KAFKA_CLUSTERS_0_NAME
               value: kafka-cluster
           image: provectuslabs/kafka-ui:latest
@@ -374,7 +374,7 @@ metadata:
   name: kafka-ingress
 spec:
   entryPoints:
-    - websecure
+    - web
   routes:
     - match: HostSNI(`kafka.daud.dev`)
       priority: 10
