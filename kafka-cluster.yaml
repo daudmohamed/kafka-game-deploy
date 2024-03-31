@@ -380,35 +380,61 @@ spec:
           port: 19092
   tls:
     secretName: kafka-0-daud-dev-tls
-#---
-#apiVersion: traefik.containo.us/v1alpha1
-#kind: IngressRouteTCP
-#metadata:
-#  name: kafka-1-ingress
-#spec:
-#  entryPoints:
-#    - kafka-1
-#  routes:
-#    - match: HostSNI(`*`)
-#      priority: 10
-#      services:
-#        - name: kafka-1
-#          port: 19093
-#  tls:
-#    secretName: kafka-daud-dev-tls
-#---
-#apiVersion: traefik.containo.us/v1alpha1
-#kind: IngressRouteTCP
-#metadata:
-#  name: kafka-2-ingress
-#spec:
-#  entryPoints:
-#    - kafka-2
-#  routes:
-#    - match: HostSNI(`*`)
-#      priority: 10
-#      services:
-#        - name: kafka-2
-#          port: 19094
-#  tls:
-#    secretName: kafka-daud-dev-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kafka-1-daud-dev-tls
+spec:
+  secretName: kafka-1-daud-dev-tls
+  dnsNames:
+    - kafka-1.daud.dev
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: kafka-1-ingress
+spec:
+  entryPoints:
+    - kafka-1
+  routes:
+    - match: HostSNI(`kafka-1.daud.dev`)
+      priority: 10
+      services:
+        - name: kafka-1
+          port: 19093
+  tls:
+    secretName: kafka-1-daud-dev-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kafka-2-daud-dev-tls
+spec:
+  secretName: kafka-2-daud-dev-tls
+  dnsNames:
+    - kafka-2.daud.dev
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: kafka-2-ingress
+spec:
+  entryPoints:
+    - kafka-2
+  routes:
+    - match: HostSNI(`kafka-2.daud.dev`)
+      priority: 10
+      services:
+        - name: kafka-2
+          port: 19094
+  tls:
+    secretName: kafka-2-daud-dev-tls
