@@ -429,7 +429,7 @@ metadata:
   name: kafka-2-ingress
 spec:
   entryPoints:
-    - kafka-2
+    - web
   routes:
     - match: HostSNI(`kafka-2.daud.dev`)
       priority: 10
