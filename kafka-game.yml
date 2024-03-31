@@ -40,11 +40,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka-game-ui
+  name: kafka-game
 spec:
   ports:
     - port: 80
       targetPort: 3000
+    - port: 8080
+      targetPort: 8080
   selector:
     app: kafka-game
 ---
@@ -73,7 +75,7 @@ spec:
       match: Host(`letsplay.daud.dev`)
       priority: 10
       services:
-        - name: kafka-game-ui
+        - name: kafka-game
           port: 80
   tls:
     secretName: letsplay-daud-dev-tls
