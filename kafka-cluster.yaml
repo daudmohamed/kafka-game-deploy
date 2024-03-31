@@ -400,7 +400,7 @@ metadata:
   name: kafka-1-ingress
 spec:
   entryPoints:
-    - kafka-1
+    - websecure
   routes:
     - match: HostSNI(`kafka-1.daud.dev`)
       priority: 10
