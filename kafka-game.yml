@@ -44,8 +44,10 @@ metadata:
 spec:
   ports:
     - port: 80
+      name: ui
       targetPort: 3000
     - port: 8080
+      name: api
       targetPort: 8080
   selector:
     app: kafka-game
