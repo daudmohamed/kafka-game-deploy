@@ -31,7 +31,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://kafka-0.daud.dev:443
+              value: BROKER://kafka-0:9092,EXTERNAL://kafka-0.daud.dev:443
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -123,7 +123,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://kafka-1.daud.dev:443
+              value: BROKER://kafka-1:9092,EXTERNAL://kafka-1.daud.dev:443
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -215,7 +215,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://kafka-2.daud.dev:443
+              value: BROKER://kafka-2:9092,EXTERNAL://kafka-2.daud.dev:443
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
