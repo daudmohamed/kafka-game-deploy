@@ -373,13 +373,11 @@ spec:
   entryPoints:
     - kafka-0
   routes:
-    - match: HostSNI(`kafka-0.daud.dev`)
+    - match: HostSNI(`*`)
       priority: 10
       services:
         - name: kafka-0
           port: 19092
-  tls:
-    secretName: kafka-0-daud-dev-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
