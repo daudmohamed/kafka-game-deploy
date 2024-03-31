@@ -31,7 +31,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://kafka-0:19092
+              value: BROKER://:9092,EXTERNAL://kafka-0.daud.dev:443
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -123,7 +123,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://kafka-1:19093
+              value: BROKER://:9092,EXTERNAL://kafka-1.daud.dev:443
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -215,7 +215,7 @@ spec:
       containers:
         - env:
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: BROKER://:9092,EXTERNAL://kafka-3:19094
+              value: BROKER://:9092,EXTERNAL://kafka-2.daud.dev:443
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: CONTROLLER
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
@@ -297,7 +297,7 @@ spec:
             - name: DYNAMIC_CONFIG_ENABLED
               value: "1"
             - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-              value: kafka.daud.dev:19092
+              value: kafka-0.daud.dev:443
             - name: KAFKA_CLUSTERS_0_NAME
               value: kafka-cluster
           image: provectuslabs/kafka-ui:latest
@@ -355,11 +355,11 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: kafka-daud-dev-tls
+  name: kafka-0-daud-dev-tls
 spec:
-  secretName: kafka-daud-dev-tls
+  secretName: kafka-0-daud-dev-tls
   dnsNames:
-    - kafka.daud.dev
+    - kafka-0.daud.dev
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
@@ -373,42 +373,42 @@ spec:
   entryPoints:
     - kafka-0
   routes:
-    - match: HostSNI(`*`)
+    - match: HostSNI(`kafka-0.daud.dev`)
       priority: 10
       services:
         - name: kafka-0
           port: 19092
   tls:
-    secretName: kafka-daud-dev-tls
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: kafka-1-ingress
-spec:
-  entryPoints:
-    - kafka-1
-  routes:
-    - match: HostSNI(`*`)
-      priority: 10
-      services:
-        - name: kafka-1
-          port: 19093
-  tls:
-    secretName: kafka-daud-dev-tls
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: kafka-2-ingress
-spec:
-  entryPoints:
-    - kafka-2
-  routes:
-    - match: HostSNI(`*`)
-      priority: 10
-      services:
-        - name: kafka-2
-          port: 19094
-  tls:
-    secretName: kafka-daud-dev-tls
+    secretName: kafka-0-daud-dev-tls
+#---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRouteTCP
+#metadata:
+#  name: kafka-1-ingress
+#spec:
+#  entryPoints:
+#    - kafka-1
+#  routes:
+#    - match: HostSNI(`*`)
+#      priority: 10
+#      services:
+#        - name: kafka-1
+#          port: 19093
+#  tls:
+#    secretName: kafka-daud-dev-tls
+#---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRouteTCP
+#metadata:
+#  name: kafka-2-ingress
+#spec:
+#  entryPoints:
+#    - kafka-2
+#  routes:
+#    - match: HostSNI(`*`)
+#      priority: 10
+#      services:
+#        - name: kafka-2
+#          port: 19094
+#  tls:
+#    secretName: kafka-daud-dev-tls
