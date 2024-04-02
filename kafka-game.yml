@@ -104,7 +104,7 @@ metadata:
   name: kafka-game-db-ingress
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
     - kind: Rule
       match: Host(`letsplaydb.daud.dev`)
