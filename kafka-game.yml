@@ -49,6 +49,9 @@ spec:
     - port: 8080
       name: api
       targetPort: 8080
+    - port: 5432
+      name: db
+      targetPort: 5432
   selector:
     app: kafka-game
 ---
@@ -81,3 +84,33 @@ spec:
           port: 80
   tls:
     secretName: letsplay-daud-dev-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsplaydb-daud-dev-tls
+spec:
+  secretName: letsplaydb-daud-dev-tls
+  dnsNames:
+    - letsplaydb.daud.dev
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kafka-game-db-ingress
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`letsplaydb.daud.dev`)
+      priority: 10
+      services:
+        - name: kafka-game
+          port: 5432
+  tls:
+    secretName: letsplaydb-daud-dev-tls
